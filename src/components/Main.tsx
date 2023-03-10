@@ -18,7 +18,7 @@ const Main = (props:IRates) => {
             case ('USD') :
                 return setSecondCurrency(+(result*rates[0].rate).toFixed(10));
             case ('EUR'):
-                return setSecondCurrency(+(result*rates[0].eur).toFixed(10));
+                return setSecondCurrency(+(result*rates[1].rate).toFixed(10));
             default: return setSecondCurrency(result);
         }
     })
@@ -27,9 +27,9 @@ const Main = (props:IRates) => {
         const result = +e.currentTarget.value;
         switch (element.value) {
             case ('USD') :
-                return setFirstCurrency(+(result*rates).toFixed(2));
+                return setFirstCurrency(+(result*rates[0].rate).toFixed(10));
             case ('EUR'):
-                return setFirstCurrency(+(result*rates).toFixed(2));
+                return setFirstCurrency(+(result*rates[1].rate).toFixed(10));
             default: return setFirstCurrency(result);
         }
     })
