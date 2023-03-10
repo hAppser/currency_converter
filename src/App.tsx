@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import { SetStateAction, useEffect, useState } from 'react';
 import './App.css';
+import Currency from './components/Currency';
+import Header from './components/Header';
+import getRate from './services/getRate';
+import { IObj } from './types/IObj';
+import { ChangeEvent } from 'react';
 
-function App() {
+const App = () => {
+  const [rateUSD, setRateUSD] = useState();
+  const [rateEUR, setRateEUR] = useState();
+
+  const [firstCurrency, setFirstCurrency] = useState();
+  const [secondCurrency, setSecondCurrency] = useState();
+
+  useEffect(() => {
+    getRate('USD').then(response => {
+      setRateUSD(response.data.map((obj:IObj) => obj.cc === 'USD' ? obj.rate : null))
+    })
+    getRate('EUR').then(response => {
+      setRateEUR(response.data.map((obj:IObj) => obj.cc === 'EUR' ? obj.rate : null))
+    })
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app mx-4 mt-14">
+      <Header usd={rateUSD} eur = {rateEUR}/>
+      <main className='flex flex-col text-center justify-around align-middle mt-10'>
+        <Currency />
+        <Currency />
+      </main>
     </div>
   );
 }
