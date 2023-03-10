@@ -1,11 +1,12 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, } from "react";
 import { IRates } from "../types/IRates";
+import { IObj } from '../types/IObj';
+
 import Currency from "./Currency"
 const Main = (props:IRates) => {
-    const [firstCurrency, setFirstCurrency] = useState<number|any>();
-    const [secondCurrency, setSecondCurrency] = useState<number|undefined|any>();
-    const currency:string[] = ["UAH", "USD", "EUR"];
-    const rates:any = [
+    const [firstCurrency, setFirstCurrency] = useState<number|undefined>();
+    const [secondCurrency, setSecondCurrency] = useState<number|undefined>();
+    const currency:any = [
         {cc: "USD", rate: props.usd},
         {cc: "EUR", rate: props.eur},
     ]
@@ -13,13 +14,13 @@ const Main = (props:IRates) => {
     const onChangeHandler1 = ((e: React.ChangeEvent<HTMLInputElement>): void => {
         let element:Element|any= e.target.nextElementSibling;
         const result = +e.currentTarget.value;
-        console.log(rates[0].cc)
+        console.log(currency[0].cc)
         switch (element.value) {
             case ('USD') :
-                return setSecondCurrency(+(result*rates[0].rate).toFixed(10));
+                return setSecondCurrency(+(result*currency[0].rate).toFixed(7));
             case ('EUR'):
-                return setSecondCurrency(+(result*rates[1].rate).toFixed(10));
-            default: return setSecondCurrency(result);
+                return setSecondCurrency(+(result*currency[1].rate).toFixed(7));
+            default: return setSecondCurrency((result));
         }
     })
     const onChangeHandler2 = ((e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -27,9 +28,9 @@ const Main = (props:IRates) => {
         const result = +e.currentTarget.value;
         switch (element.value) {
             case ('USD') :
-                return setFirstCurrency(+(result*rates[0].rate).toFixed(10));
+                return setFirstCurrency(+(result*currency[0].rate).toFixed(7));
             case ('EUR'):
-                return setFirstCurrency(+(result*rates[1].rate).toFixed(10));
+                return setFirstCurrency(+(result*currency[1].rate).toFixed(7));
             default: return setFirstCurrency(result);
         }
     })
