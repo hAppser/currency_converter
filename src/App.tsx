@@ -1,33 +1,29 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import {useEffect, useState } from 'react';
 import './App.css';
-import Currency from './components/Currency';
 import Header from './components/Header';
+import Main from './components/Main';
 import getRate from './services/getRate';
 import { IObj } from './types/IObj';
-import { ChangeEvent } from 'react';
 
 const App = () => {
-  const [rateUSD, setRateUSD] = useState();
-  const [rateEUR, setRateEUR] = useState();
-
-  const [firstCurrency, setFirstCurrency] = useState();
-  const [secondCurrency, setSecondCurrency] = useState();
+  const [rateUSD, setRateUSD] = useState<number>();
+  const [rateEUR, setRateEUR] = useState<number>();
 
   useEffect(() => {
     getRate('USD').then(response => {
-      setRateUSD(response.data.map((obj:IObj) => obj.cc === 'USD' ? obj.rate : null))
+      const resultArray = response.data.map((obj:IObj) => obj.cc === 'USD' ? obj.rate : null);
+      setRateUSD(resultArray)
     })
     getRate('EUR').then(response => {
-      setRateEUR(response.data.map((obj:IObj) => obj.cc === 'EUR' ? obj.rate : null))
+      const resultArray = response.data.map((obj:IObj) => obj.cc === 'EUR' ? obj.rate : null);
+      setRateEUR(resultArray)
     })
-  }, [])
+    
+  },[])
   return (
     <div className="app mx-4 mt-14">
       <Header usd={rateUSD} eur = {rateEUR}/>
-      <main className='flex flex-col text-center justify-around align-middle mt-10'>
-        <Currency />
-        <Currency />
-      </main>
+      <Main usd={Number(rateUSD).toFixed(2)} eur = {Number(rateEUR).toFixed(2)}/>
     </div>
   );
 }
