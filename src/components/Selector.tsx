@@ -9,7 +9,7 @@ type Props = {
 
 const Selector = (props:Props) => {
     return (
-        <select onChange={props.firstCurrency} className="m-2 cursor-pointer  border border-white rounded-full md:h-4/5">
+        <select onChange={props.firstCurrency} className="m-2 cursor-pointer outline-none border rounded-full md:h-4/5">
           {props.selector.map((item:ISelector, index:number) => 
             (
                 <option
