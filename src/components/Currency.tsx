@@ -5,7 +5,7 @@ import { ISelector } from "../types/ISelector";
 type Props = {
     inputOnChange: any;
     defaultValue: any
-    newValue:number|undefined|any
+    value:number|undefined|any
     firstCurrency:string|any
     selector:ISelector[]
     secondCurrency:string|number|undefined
@@ -16,7 +16,7 @@ const Currency:React.FC<Props> = (props) => {
 
     return (
         <div className="m-2">
-            <Input onChange={props.inputOnChange} disabledInput={props.disabledInput} value={props.newValue}/>
+            <Input onChange={props.inputOnChange} disabledInput={props.disabledInput} value={props.value}/>
             <Selector firstCurrency={props.firstCurrency} selector={props.selector} secondCurrency={props.secondCurrency}/>
         </div>
     )
