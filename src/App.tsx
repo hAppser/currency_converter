@@ -19,7 +19,7 @@ const App = () => {
       setRateEUR(resultArray)
     })
     
-  }, [])
+  },[])
   return (
     <div className="app mx-4 mt-14">
       <Header usd={rateUSD} eur = {rateEUR}/>
