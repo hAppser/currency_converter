@@ -15,31 +15,31 @@ const Main = (props:any) => {
     const [secondCurrencySelector, setSecondCurrencySelector] = useState("");
     const [moneyChanged, setMoneyChanged] = useState(null);
   
-    const secondInputValue = !!moneyChanged ? moneyChanged[secondCurrencySelector] : "";
-    const firstInputValue = !!moneyChanged ? moneyChanged[firstCurrencySelector] : "";
+    const secondInputValue:any = !!moneyChanged ? moneyChanged[secondCurrencySelector] : "";
+    const firstInputValue:any = !!moneyChanged ? moneyChanged[firstCurrencySelector] : "";
 
     const switchHandle = (num:number, value:string) => {
       switch (value) {
         case "usd":
-          console.log(value);
+          console.log(value, num)
           return {
-            eur: (num * props.usd) / props.eur,
-            uah: num * props.usd,
-            usd: num > 0 ? num+'' : 0,
+            eur: +((num * props.usd) / props.eur).toFixed(3)+'',
+            uah: +(num * props.usd).toFixed(3)+'',
+            usd: num === 0 ? 0 : num+'',
           };
         case "uah":
-          console.log(value);
+          console.log(value, num)
           return {
-            eur: num / props.eur,
-            usd: num / props.usd,
-            uah: num > 0 ? num+'' : 0,
+            eur: +(num / props.eur).toFixed(3)+'',
+            usd: +(num / props.usd).toFixed(3)+'',
+            uah: num === 0 ? 0 : num+'',
           };
         case "eur":
-          console.log(value);
+          console.log(value, num)
           return {
-            uah: num * props.eur,
-            usd: (num * props.usd) / props.eur,
-            eur: num > 0 ? num+'' : 0,
+            uah: +(num * props.eur).toFixed(3)+'',
+            usd: +((num * props.usd) / props.eur).toFixed(3)+'',
+            eur: num === 0 ? num : num+'',
           };
         default:
           return " ";
@@ -47,15 +47,13 @@ const Main = (props:any) => {
     };
   
     const changer = (e:React.ChangeEvent<HTMLInputElement>, currency:string) => {
-      const num = Math.abs(Number(e.target?.value));
-  
+      const num = Number(e.target?.value);
       const result:any = switchHandle(num, currency);
-  
       setMoneyChanged(result);
     };
     return(
         
-        <main className='flex flex-col text-center justify-around align-middle mt-10 bg-blue-600 rounded-3xl h-72'>
+        <main className='flex flex-col text-center justify-around align-middle mt-10 bg-blue-600 rounded-3xl h-80'>
             <Currency
                 inputOnChange={(e: React.ChangeEvent<HTMLInputElement>) => changer(e, firstCurrencySelector)}
                 disabledInput={!firstCurrencySelector}

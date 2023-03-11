@@ -8,7 +8,7 @@ const Selector = (props:any) => {
                 disabled={
                     item.disabled || item.text === props.secondCurrency.toUpperCase() 
                 }
-                selected={item.selected }
+                selected={item.selected}
                 >
                 {item.text}
                 </option>

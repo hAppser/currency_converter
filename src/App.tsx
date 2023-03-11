@@ -23,7 +23,7 @@ const App = () => {
   return (
     <div className="app mx-4 mt-14">
       <Header usd={rateUSD} eur = {rateEUR}/>
-      <Main usd={rateUSD} eur = {rateEUR}/>
+      <Main usd={Number(rateUSD).toFixed(2)} eur = {Number(rateEUR).toFixed(2)}/>
     </div>
   );
 }
