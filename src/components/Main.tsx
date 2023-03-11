@@ -10,7 +10,7 @@ const selector:ISelector[] = [
     { text: "USD" }
 ];
 
-const Main = (props:IRates) => {
+const Main = (props:any) => {
     
     const [mainInput, setMainInput] = useState("");
     const [secondInput, setSecondInput] = useState("");
@@ -23,18 +23,18 @@ const Main = (props:IRates) => {
       switch (value) {
         case "usd":
           return {
-            eur: (num * 36) / 38,
-            uah: num * 36
+            eur: (num * props.usd) / props.eur,
+            uah: num * props.usd
           };
         case "uah":
           return {
-            eur: num / 38,
-            usd: num / 36
+            eur: num / props.eur,
+            usd: num / props.usd
           };
         case "eur":
           return {
-            uah: num * 38,
-            usd: (num * 38) / 36
+            uah: num * props.eur,
+            usd: (num * props.usd) / props.eur
           };
         default:
           return "";
