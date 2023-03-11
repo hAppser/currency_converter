@@ -1,6 +1,4 @@
-import { useState, } from "react";
-import useDebounce from "../hooks/useDebounce";
-import { IRates } from "../types/IRates";
+import { useState, useEffect, useRef } from "react";
 import { ISelector } from "../types/ISelector";
 import Currency from "./Currency"
 
@@ -13,32 +11,35 @@ const selector:ISelector[] = [
 
 const Main = (props:any) => {
     
-    const [mainInput, setMainInput] = useState("");
-    const [secondInput, setSecondInput] = useState("");
+    const [firstCurrencySelector, setfirstCurrency] = useState("");
+    const [secondCurrencySelector, setSecondCurrencySelector] = useState("");
     const [moneyChanged, setMoneyChanged] = useState(null);
   
-    const secondInputValue = !!moneyChanged ? moneyChanged[secondInput] : "";
-    const firstInputValue = !!moneyChanged ? moneyChanged[mainInput] : "";
+    const secondInputValue = !!moneyChanged ? moneyChanged[secondCurrencySelector] : "";
+    const firstInputValue = !!moneyChanged ? moneyChanged[firstCurrencySelector] : "";
 
     const switchHandle = (num:number, value:string) => {
       switch (value) {
         case "usd":
+          console.log(value);
           return {
             eur: (num * props.usd) / props.eur,
             uah: num * props.usd,
-            usd: num === 0 ? '' : num,
+            usd: num > 0 ? num+'' : 0,
           };
         case "uah":
+          console.log(value);
           return {
             eur: num / props.eur,
             usd: num / props.usd,
-            uah: num === 0 ? '' : num,
+            uah: num > 0 ? num+'' : 0,
           };
         case "eur":
+          console.log(value);
           return {
             uah: num * props.eur,
             usd: (num * props.usd) / props.eur,
-            eur: num === 0 ? '' : num,
+            eur: num > 0 ? num+'' : 0,
           };
         default:
           return " ";
@@ -48,28 +49,28 @@ const Main = (props:any) => {
     const changer = (e:React.ChangeEvent<HTMLInputElement>, currency:string) => {
       const num = Math.abs(Number(e.target?.value));
   
-      const result:any  = switchHandle(num, currency);
+      const result:any = switchHandle(num, currency);
   
       setMoneyChanged(result);
     };
     return(
         
         <main className='flex flex-col text-center justify-around align-middle mt-10 bg-blue-600 rounded-3xl h-72'>
-            <Currency 
-                inputOnChange={(e: React.ChangeEvent<HTMLInputElement>) => changer(e, mainInput)}
-                disabledInput={!mainInput}
+            <Currency
+                inputOnChange={(e: React.ChangeEvent<HTMLInputElement>) => changer(e, firstCurrencySelector)}
+                disabledInput={!firstCurrencySelector}
                 value={firstInputValue}
-                firstCurrency={(e: React.ChangeEvent<HTMLInputElement>) => setMainInput(e.target?.value.toLowerCase())}
+                firstCurrency={(e: React.ChangeEvent<HTMLInputElement>) => setfirstCurrency(() => e.target?.value.toLowerCase())}
                 selector={selector}
-                secondCurrency={secondInput.toUpperCase()} defaultValue={undefined}           
+                secondCurrency={secondCurrencySelector.toLowerCase()}            
             /> 
             <Currency 
-                inputOnChange={(e: React.ChangeEvent<HTMLInputElement>) => changer(e, secondInput)}
-                disabledInput={!secondInput}
+                inputOnChange={(e: React.ChangeEvent<HTMLInputElement>) => changer(e, secondCurrencySelector)}
+                disabledInput={!secondCurrencySelector}
                 value={secondInputValue}
-                firstCurrency={(e: React.ChangeEvent<HTMLInputElement>) => setSecondInput(e.target?.value.toLowerCase())}
+                firstCurrency={(e: React.ChangeEvent<HTMLInputElement>) => setSecondCurrencySelector(() => e.target?.value.toLowerCase())}
                 selector={selector}
-                secondCurrency={mainInput.toUpperCase()} defaultValue={undefined}           
+                secondCurrency={firstCurrencySelector.toLowerCase()}          
             /> 
         </main>
     )

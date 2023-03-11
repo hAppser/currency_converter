@@ -4,8 +4,7 @@ import { ISelector } from "../types/ISelector";
 
 type Props = {
     inputOnChange: any;
-    defaultValue: any
-    value:number|undefined|any
+    value:any
     firstCurrency:string|any
     selector:ISelector[]
     secondCurrency:string|number|undefined
