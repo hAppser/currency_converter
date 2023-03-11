@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { IRates } from "../types/IRates";
 import { ISelector } from "../types/ISelector";
 import Currency from "./Currency"
 
@@ -12,34 +13,31 @@ const selector:ISelector[] = [
 const Main = (props:any) => {
     
     const [firstCurrencySelector, setfirstCurrency] = useState("");
-    const [secondCurrencySelector, setSecondCurrencySelector] = useState("");
+    const [secondCurrencySelector, setSecondCurrencySelector] = useState<string>("");
     const [moneyChanged, setMoneyChanged] = useState(null);
   
-    const secondInputValue:any = !!moneyChanged ? moneyChanged[secondCurrencySelector] : "";
-    const firstInputValue:any = !!moneyChanged ? moneyChanged[firstCurrencySelector] : "";
+    const secondInputValue = !!moneyChanged ? moneyChanged[secondCurrencySelector] : "";
+    const firstInputValue = !!moneyChanged ? moneyChanged[firstCurrencySelector] : "";
 
     const switchHandle = (num:number, value:string) => {
       switch (value) {
         case "usd":
-          console.log(value, num)
           return {
-            eur: +((num * props.usd) / props.eur).toFixed(3)+'',
-            uah: +(num * props.usd).toFixed(3)+'',
+            eur: +((num * props?.usd) / props.eur).toFixed(3)+'',
+            uah: +(num * props?.usd).toFixed(3)+'',
             usd: num === 0 ? 0 : num+'',
           };
         case "uah":
-          console.log(value, num)
           return {
             eur: +(num / props.eur).toFixed(3)+'',
             usd: +(num / props.usd).toFixed(3)+'',
             uah: num === 0 ? 0 : num+'',
           };
         case "eur":
-          console.log(value, num)
           return {
             uah: +(num * props.eur).toFixed(3)+'',
             usd: +((num * props.usd) / props.eur).toFixed(3)+'',
-            eur: num === 0 ? num : num+'',
+            eur: num === 0 ? 0 : num+'',
           };
         default:
           return " ";

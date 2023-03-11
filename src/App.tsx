@@ -6,8 +6,8 @@ import getRate from './services/getRate';
 import { IObj } from './types/IObj';
 
 const App = () => {
-  const [rateUSD, setRateUSD] = useState<number>();
-  const [rateEUR, setRateEUR] = useState<number>();
+  const [rateUSD, setRateUSD] = useState<number>(1);
+  const [rateEUR, setRateEUR] = useState<number>(1);
 
   useEffect(() => {
     getRate('USD').then(response => {
@@ -23,7 +23,7 @@ const App = () => {
   return (
     <div className="app mx-4 mt-14">
       <Header usd={rateUSD} eur = {rateEUR}/>
-      <Main usd={Number(rateUSD).toFixed(2)} eur = {Number(rateEUR).toFixed(2)}/>
+      <Main usd={rateUSD as number} eur = {rateEUR as number}/>
     </div>
   );
 }

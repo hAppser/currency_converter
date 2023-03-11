@@ -1,4 +1,4 @@
 export interface IRates {
-    usd:number | undefined;
-    eur:number | undefined;
+    usd?:number | undefined ;
+    eur?:number | undefined ;
 }

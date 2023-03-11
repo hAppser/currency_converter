@@ -1,7 +1,16 @@
-const Selector = (props:any) => {
+import { ChangeEventHandler } from "react";
+import { ISelector } from "../types/ISelector"
+
+type Props = {
+  secondCurrency: string;
+  selector:ISelector[],
+  firstCurrency: ChangeEventHandler<HTMLSelectElement> | undefined;
+}
+
+const Selector = (props:Props) => {
     return (
-        <select onChange={props.firstCurrency} className="m-2 cursor-pointer">
-          {props.selector.map((item:any, index:number) => 
+        <select onChange={props.firstCurrency} className="m-2 cursor-pointer  border border-white rounded-full md:h-4/5">
+          {props.selector.map((item:ISelector, index:number) => 
             (
                 <option
                 key={index}
