@@ -45,8 +45,8 @@ const Main = (props:any) => {
       }
     };
   
-    const changer = (e:any, currency:string) => {
-      const num = Number(e.target?.value);
+    const changer = (e:React.ChangeEvent<HTMLInputElement>, currency:string) => {
+      const num = Math.abs(Number(e.target?.value));
   
       const result:any  = switchHandle(num, currency);
   
@@ -64,7 +64,7 @@ const Main = (props:any) => {
                 secondCurrency={secondInput.toUpperCase()} defaultValue={undefined}           
             /> 
             <Currency 
-                inputOnChange={(e: Event) => changer(e, secondInput)}
+                inputOnChange={(e: React.ChangeEvent<HTMLInputElement>) => changer(e, secondInput)}
                 disabledInput={!secondInput}
                 value={secondInputValue}
                 firstCurrency={(e: React.ChangeEvent<HTMLInputElement>) => setSecondInput(e.target?.value.toLowerCase())}
