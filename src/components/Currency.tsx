@@ -1,19 +1,23 @@
+import Selector from "./Selector";
+import Input from "./Input";
+import { ISelector } from "../types/ISelector";
+
 type Props = {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    newValue:number|undefined;
+    inputOnChange: any;
+    defaultValue: any
+    newValue:number|undefined|any
+    firstCurrency:string|any
+    selector:ISelector[]
+    secondCurrency:string|number|undefined
+    disabledInput:boolean
   }
 
-const Currency:React.FC<Props> = (props) => {
-    const currency:string[] = ["UAH", "USD", "EUR"];
+const Currency:React.FC<Props> = (props) => {    
 
     return (
         <div className="m-2">
-            <input onChange={props.onChange} type="number" placeholder="0" className="input px-2 bg-blue-600 placeholder:text-white text-white border-white border rounded-lg md:text-xl" defaultValue={props.newValue}></input>
-            <select className="m-2 cursor-pointer">
-                {currency.map((keyName) => 
-                    (<option key={keyName} value={keyName}>{keyName}</option>)
-                )}
-            </select>
+            <Input onChange={props.inputOnChange} disabledInput={props.disabledInput} value={props.newValue}/>
+            <Selector firstCurrency={props.firstCurrency} selector={props.selector} secondCurrency={props.secondCurrency}/>
         </div>
     )
 }
