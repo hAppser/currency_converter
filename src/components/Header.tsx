@@ -1,4 +1,4 @@
-import { IRates } from "../../types/IRates";
+import { IRates } from "../types/IRates";
 
 const Header = (props:IRates) => {
     return (
